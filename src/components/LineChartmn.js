@@ -8,8 +8,8 @@ export default class LineChartmn extends React.Component {
       Data: {}
     }
   }
-  componentDidMount() {
-    axios.get(this.props.api,{params:{userId: this.props.message}})
+  apiCall() {
+    axios.get(this.props.api,{params:{userId: this.props.message, year: this.props.year, month: this.props.month}})
       .then(res => {
         const response = res.data;
         let day=[];
@@ -61,7 +61,19 @@ export default class LineChartmn extends React.Component {
         this.setState({ErrorMessage:"Error in retrieving data"})
       }) 
     }
- 
+    componentDidMount(){
+      this.apiCall();
+    }
+  
+    componentDidUpdate(prevProps, prevState){
+      if(prevProps.month !== this.props.month){
+        this.apiCall();
+      }
+      if(prevProps.year !== this.props.year){
+        this.apiCall();
+      }
+            
+    }
 
   render() {
     return (

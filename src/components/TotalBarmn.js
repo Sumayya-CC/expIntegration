@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
 import axios from 'axios';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import Button from '@material-ui/core/Button';
 
 export default class TotalBarmn extends Component
 {
@@ -13,8 +14,8 @@ export default class TotalBarmn extends Component
       }
     }
     
-      componentDidMount() {
-        axios.get(this.props.api,{params:{userId: this.props.message}})
+      apiCall() {
+        axios.get(this.props.api,{params:{userId: this.props.message, year: this.props.year, month: this.props.month} })
           .then(res => {
             let amount=[];
             amount.push(res.data.TotalIncome);
@@ -39,6 +40,19 @@ export default class TotalBarmn extends Component
             this.setState({ErrorMessage:"Error in retrieving data"})
           }) 
         }
+  componentDidMount(){
+    this.apiCall();
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.month !== this.props.month){
+      this.apiCall();
+    }
+    if(prevProps.year !== this.props.year){
+      this.apiCall();
+    }
+          
+  }
  render()
    {
      return(
@@ -48,6 +62,7 @@ export default class TotalBarmn extends Component
             options = {chartoptions}
             width= {400} 
             plugins={[ChartDataLabels]} />
+          
         </div>
       )
    }   
