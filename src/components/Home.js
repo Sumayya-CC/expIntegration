@@ -28,12 +28,12 @@ class Home extends Component{
         //     <p>Name    : {this.props.params.name}</p>
         //     </div>
         <div>
-        {/* <div className="split1 left1"> <FullWidthTabs message = {this.props.params.id}/> </div>
+         <div className="split1 left1"> <FullWidthTabs message = {this.props.params.id}/> </div>
         <div className="split1 center1"style={{overflowX:"hidden", overflowY:"scroll"}} >
         <div className="split1 style">
                 <CheckBox  message = {this.props.params.id}/>
                 </div>
-                </div> */}
+                </div> 
         <div className="split1 right1"> 
         <div  className="header">
         <div className="subsplitleft">
