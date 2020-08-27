@@ -4,17 +4,19 @@ import {TextField,Button} from '@material-ui/core/';
 import './Style.css';
 import { withStyles } from "@material-ui/core/styles";
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
-import * as API from '../constants/Api';
-
+ 
+ 
+ 
 var date = new Date();
-    var moment = require('moment');
-    var dateIn = moment(date);
-    var formatedDate=dateIn.format("YYYY-MM-DD");
+var moment = require('moment');
+var dateIn = moment(date);
+var formatedDate=dateIn.format("YYYY-MM-DD");
+ 
+ 
 //Adding js styles
 const styles = theme => (
     {
@@ -36,7 +38,7 @@ const styles = theme => (
                 borderColor: 'white',
             },
             '& .MuiInput-input':{ color: "white"},
-            paddingLeft: 140,
+            paddingLeft: 75,
             color: "white",
             textEmphasisColor: "white",
             '& .MuiInput-underline:before': {
@@ -72,12 +74,13 @@ const styles = theme => (
         border: 0,
         borderRadius: 3,
         color: "white",
-        width:490,
+        width:350,
         height: 50,
         marginTop: 50,
         textTransform: 'none',
         backgroundColor: '#37364b',
         borderColor: '#007bff',
+        // borderRadius: 10,
         '&:hover': {
         backgroundColor: 'black',
         borderColor: '#0062cc',
@@ -94,49 +97,46 @@ const styles = theme => (
         
         
     },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 475,
-        paddingTop: 10,
-        marginTop: 20,
-        color: "white",
-        '& .MuiInput-input':{ color: "white"},
-        multilineColor:{
-        color:'white'
-        },
-        '& label.Mui-focused': {
-        color: 'white',
-        },
-        '& label': {
-        color: 'white',
-        },
-        '& .MuiInput-underline:after': {
-        borderBottomColor: 'white',
-        },
-        '& .MuiInput-underline:before': {
-        borderBottomColor: 'white',
-        },
-        
-        '&:hover fieldset': {
-        borderColor: 'white',
-        },
-        '&.Mui-focused fieldset': {
-        borderColor: 'white',
-        },
-        '&& .MuiInput-root:hover::before': {
-        borderColor: 'white',
-        } 
-        },
+
     dense: {
         marginTop: 19,
     },
     menu: {
         width: 200,
     },
-    });
+ 
+    textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 350,
+    paddingTop: 10,
+    marginTop: 20,
+    color: "white",
     
-
+    '& label.Mui-focused': {
+    color: 'white',
+    },
+    '& label': {
+    color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+    borderBottomColor: 'white',
+    },
+    '& .MuiInput-underline:before': {
+    borderBottomColor: 'white',
+    },
+    
+    '&.Mui-focused fieldset': {
+    borderColor: 'white',
+    },
+    '&& .MuiInput-root:hover::before': {
+    borderColor: 'white',
+    } 
+    },
+    
+  });
+    
+ 
     //Included with material ui code for Numberbox
     function NumberFormatCustom(props) {
     const { inputRef, onChange, ...other } = props;
@@ -163,41 +163,33 @@ const styles = theme => (
       onChange: PropTypes.func.isRequired,
     };
 
+
+
+
   // class starts here
   class InsertIncome extends React.Component {
     // constructers
     constructor(props){
     super(props);
     this.state = {
-    date: formatedDate,
+    date:formatedDate,
     item:'',
     amount:'',
     category:'',
-    selex:'',
-    selectedOption: '',
-    ProductData: [] ,
-    open: false,
+    catId:'',
+    catName:'',
+    drawer: false,
+    cat:'',
   }
 }
-
-  //Following function will be called by default on page load
-  
-   componentDidMount() {  
-    axios.get(API.CAT_LIST_INCOME)
-    .then(response => {  
-            console.log("____________",response.data);  
-            this.setState({  
-                    ProductData: response.data  
-            });  
-    });  
-}     
-
+ 
+ 
   //functions for various Onchange events
-
+ 
   handleClose = () => {
     this.setState({ open: false });
   };
-
+ 
   handleChange1 = event => {
     this.setState({ date: event.target.value });
     console.log(this.state.date);
@@ -214,40 +206,36 @@ const styles = theme => (
     console.log(this.state.amount);
     
   }
-
-  handleChange4 = event => {
-    this.setState({ category: event.target.value });
-    console.log(this.state.category);
-
+ 
+  handleChange4 = (category)  => {
+    this.setState({ catId: category.ID });
+    this.setState({ catName: category.CATEGORY_NAME });
+    console.log(this.state.catId);
+    console.log('category selected insert income');
+ 
   }
 
-  handleOptionSelected =  (event, values) => {
-    this.setState({selex: values}, () => {
-      console.log("0000000000000",this.state.selex);
-    });
+  drawerOp = () => {
+    this.props.drawerOpen();
+    console.log('drawer');
   }
-
+  
+ 
   //Function to handle submit event
   handleSubmit = event => {
-    event.preventDefault();
-    console.log("dfdf");
-    axios.post(`http://localhost:8081/tracker/register/addincome?userId=${this.props.message}&item=${this.state.item}&categoryId=${this.state.selex.value}&amount=${this.state.amount}&transactionDate=${this.state.date}`).then(res => {
-      console.log("res="+res);
-      this.setState({ open: true ,amount:'',item:'',selex:'',date:formatedDate});  
-    })
-  }
-
-  render() {
-
     
-
+    event.preventDefault();
+    console.log("adding income");
+    axios.post(`http://localhost:8081/tracker/register/addincome?userId=${this.props.message}&item=${this.state.item}&categoryId=${this.state.catId}&amount=${this.state.amount}&transactionDate=${this.state.date}`).then(res => {
+      console.log("res="+res);
+      this.setState({ open: true,amount:'',item:'',catId:'',catName:'',date:formatedDate });    })
+  }
+ 
+  render() {
+ 
+ 
     const { classes } = this.props;
 
-    //Mapping result into label and value
-    let options = this.state.ProductData.map(function (cat) {
-      return { value: cat.ID, label: cat.CATEGORY_NAME };
-    })
-    console.log("xxxxxxxx",options);
     
     return (
       
@@ -255,22 +243,22 @@ const styles = theme => (
         {/* form starts here */}
         <form onSubmit={this.handleSubmit} >
        
+
             {/* Datepicker */}
             <label className="labelclass"> 
-            Date            
-                    <TextField
-                    onChange={this.handleChange1}
-                    name="date" 
-                    type="date"
-                    value={this.state.date}
-                    className={classes.datepickerx}
-                    required                    
-                    />
-                    <CalendarTodayIcon style={{ fontSize: 25, paddingLeft:120 }}  />
+              Date            
+              <TextField
+                onChange={this.handleChange1}
+                name="date" 
+                type="date"
+                value={this.state.date}
+                className={classes.datepickerx}
+                required/>
+              <CalendarTodayIcon style={{ fontSize: 25, paddingLeft:75 }} />
             </label>
+ 
 
             {/* Item Field */}
-
             <TextField 
               required
               InputLabelProps={{required: false}}  
@@ -281,6 +269,7 @@ const styles = theme => (
               value={this.state.item}
               onChange={this.handleChange2}/>
 
+      
             {/* Amount field */}
             <TextField
               className={classes.textField}
@@ -295,28 +284,14 @@ const styles = theme => (
                 inputComponent: NumberFormatCustom,
               }}
         />
+            {/* Category field */}
+            <TextField label="Category" name='category' id='category'
+              required InputLabelProps={{required:false}} value={this.state.catName}          
+              className={classes.textField} onClick={this.drawerOp}/>
             
-            {/* <TextField required pattern="[0-9]*" className={classes.textField} label="Amount" name="amount" onChange={this.handleChange3}/><div/> */}
-            
-            {/* Material UI autocomplete for category */}
-
-            <Autocomplete
-                id="clear-on-escape"
-                clearOnEscape
-                required
-                className={classes.textField}
-                options={options}
-                value={this.state.selex}
-                getOptionLabel={option => option.label}       
-                onOptionSelected={this.handleOptionSelected}
-                onChange={this.handleOptionSelected}
-                renderInput={(params) => (
-                <TextField required InputLabelProps={{required: false}}  {...params} label="Category" margin="normal" />
-                )}
-            />        
-
+ 
             {/* Submit button */}
-
+ 
             <div> 
              <Button className={classes.Button}  variant="contained" disableElevation type="submit">
                   Add Income
@@ -327,10 +302,10 @@ const styles = theme => (
                   TransitionComponent={Fade}
                   autoHideDuration={1000}
                   variant="success"
-                  message={<span  id="message-id">Income Insertion Successfull</span>}
+                  message={<span  id="message-id">Income Insertion Successful</span>}
             /> 
            </div>
-
+ 
           
         </form>
       </div>
