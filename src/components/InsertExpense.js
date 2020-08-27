@@ -8,15 +8,16 @@ import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
- 
- 
- 
+
+
+
 var date = new Date();
 var moment = require('moment');
 var dateIn = moment(date);
 var formatedDate=dateIn.format("YYYY-MM-DD");
- 
- 
+
+
+
 //Adding js styles
 const styles = theme => (
     {
@@ -97,7 +98,7 @@ const styles = theme => (
         
         
     },
-    
+
     dense: {
         marginTop: 19,
     },
@@ -163,13 +164,9 @@ const styles = theme => (
       onChange: PropTypes.func.isRequired,
     };
 
-    
- 
 
 
 
-
-    
   // class starts here
   class InsertExpense extends React.Component {
     // constructers
@@ -198,13 +195,13 @@ const styles = theme => (
     this.setState({ date: event.target.value });
     console.log(this.state.date);
   }
- 
+
   handleChange2 = event => {
     this.setState({ item: event.target.value });
     console.log(this.state.item);
     console.log("----------------",this.state.ProductData);
   }
- 
+
   handleChange3 = event => {
     this.setState({ amount: event.target.value });
     console.log(this.state.amount);
@@ -225,7 +222,7 @@ const styles = theme => (
   }
 
   
- 
+
   //Function to handle submit event
   handleSubmit = event => {
     
@@ -262,7 +259,7 @@ const styles = theme => (
             </label>
  
             {/* Item Field */}
- 
+
             <TextField 
               required
               InputLabelProps={{required: false}}  
@@ -272,7 +269,8 @@ const styles = theme => (
               required
               value={this.state.item}
               onChange={this.handleChange2}/>
- 
+
+      
             {/* Amount field */}
             <TextField
               className={classes.textField}

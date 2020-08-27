@@ -97,7 +97,7 @@ const styles = theme => (
         
         
     },
-    
+
     dense: {
         marginTop: 19,
     },
@@ -162,10 +162,10 @@ const styles = theme => (
       inputRef: PropTypes.func.isRequired,
       onChange: PropTypes.func.isRequired,
     };
- 
 
 
-    
+
+
   // class starts here
   class InsertIncome extends React.Component {
     // constructers
@@ -194,13 +194,13 @@ const styles = theme => (
     this.setState({ date: event.target.value });
     console.log(this.state.date);
   }
- 
+
   handleChange2 = event => {
     this.setState({ item: event.target.value });
     console.log(this.state.item);
     console.log("----------------",this.state.ProductData);
   }
- 
+
   handleChange3 = event => {
     this.setState({ amount: event.target.value });
     console.log(this.state.amount);
@@ -235,7 +235,7 @@ const styles = theme => (
  
  
     const { classes } = this.props;
- 
+
     
     return (
       
@@ -268,7 +268,8 @@ const styles = theme => (
               required
               value={this.state.item}
               onChange={this.handleChange2}/>
- 
+
+      
             {/* Amount field */}
             <TextField
               className={classes.textField}
@@ -312,3 +313,4 @@ const styles = theme => (
   }
 }
 export default withStyles(styles)(InsertIncome);
+

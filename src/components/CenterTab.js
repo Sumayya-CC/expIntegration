@@ -48,6 +48,7 @@ function a11yProps(index) {
   };
 }
 
+
 const styles = theme => ({
     root: {
       backgroundColor: '#69B5FF',
@@ -322,3 +323,4 @@ export default withStyles(styles, {withTheme: true})(FullWidthTabs);
 //     </div>
 //   );
 // }
+
